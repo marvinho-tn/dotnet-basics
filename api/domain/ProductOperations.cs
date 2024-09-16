@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using api.common;
 
 namespace api.domain
 {
@@ -47,12 +48,29 @@ namespace api.domain
 
 		public ValidationResult Execute(Product product)
 		{
-			var validation = new ValidationResult();
+			ValidationResult validation = null;
 
 			if(string.IsNullOrEmpty(product.Name))
 			{
-				
+				validation = new ValidationResult(ValidationErrors.RequiredProductName.GetDescription());
 			}
+			if(string.IsNullOrEmpty(product.Description))
+			{
+				if(validation == null)
+				{
+					validation = new ValidationResult(ValidationErrors.RequiredProductDescription.GetDescription());
+				}
+				else
+				{
+					
+				}
+			}
+			if(string.IsNullOrEmpty(product.Name))
+			{
+				validation = new ValidationResult(ValidationErrors.RequiredProductName.GetDescription());
+			}
+
+			return validation;
 		}
 	}
 
@@ -67,7 +85,9 @@ namespace api.domain
 
 		public ValidationResult Execute(Product product)
 		{
-			
+			ValidationResult validation = null;
+
+			return validation;
 		}
 	}
 
@@ -82,7 +102,9 @@ namespace api.domain
 
 		public ValidationResult Execute(long productId)
 		{
-			
+			ValidationResult validation = null;
+
+			return validation;
 		}
 	}
 
@@ -97,7 +119,9 @@ namespace api.domain
 
 		public ValidationResult Execute(Category category)
 		{
-			
+			ValidationResult validation = null;
+
+			return validation;
 		}
 	}
 
@@ -112,7 +136,9 @@ namespace api.domain
 
 		public ValidationResult Execute(Category category)
 		{
-			
+			ValidationResult validation = null;
+
+			return validation;
 		}
 	}
 
@@ -127,7 +153,9 @@ namespace api.domain
 
 		public ValidationResult Execute(long categoryId)
 		{
-			
+			ValidationResult validation = null;
+
+			return validation;
 		}
 	}
 }
