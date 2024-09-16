@@ -62,13 +62,20 @@ namespace api.domain
 				}
 				else
 				{
-					
+
 				}
 			}
 			if(string.IsNullOrEmpty(product.Name))
 			{
 				validation = new ValidationResult(ValidationErrors.RequiredProductName.GetDescription());
 			}
+
+			if(validation != null)
+			{
+				return validation;
+			}
+
+			_repository.Add(product);
 
 			return validation;
 		}
