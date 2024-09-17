@@ -1,12 +1,10 @@
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace api.common
 {
-	public enum ValidationErrors
+	public enum ValidationError
 	{
 		[Description("O nome do produto é obrigatório.")]
 		RequiredProductName = 422001,
@@ -18,11 +16,32 @@ namespace api.common
 		RequiredProductCategory = 422003,
 	}
 
+	public class ValidationResult
+	{
+		public ValidationResult(ValidationError error)
+		{
+			Description = error.GetDescription();
+			Name = error.ToString();
+			Code = (int)error;
+		}
+		
+		public string Description { get; }
+		public string Name { get; }
+		public int Code { get; }
+	}
+
+	public class ValidationResultObject<T>
+	{
+		public List<ValidationResult> Errors { get; set; } = [];
+		public T Object { get; set; }
+	}
+
 	public static class ValidationErrorsExtensions
 	{
-		public static string GetDescription(this ValidationErrors error)
+		public static string GetDescription(this ValidationError error)
 		{
-			return string.Empty;
+			return DescriptionAttribute.GetCustomAttribute(error.GetType(), typeof(DescriptionAttribute)).GetType()
+				.GetDefaultValue().ToString() ?? string.Empty;
 		}
 	}
 }
