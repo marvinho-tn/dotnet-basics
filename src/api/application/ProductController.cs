@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace api.application;
 
 [ApiController]
-[Route("/api/product")]
+[Route("/api/products")]
 public class ProductController(ICreateProductDecorator decorator) : ControllerBase
 {
     [HttpPost]
